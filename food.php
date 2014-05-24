@@ -17,8 +17,16 @@ function qMysql($str){
 header('Content-Type: application/json; charset=utf-8');
 header("Access-Control-Allow-Origin: *");
 
-//$query = "SELECT * FROM lunch WHERE date = '".date("Y/m/d")."'";
-$query = "SELECT * FROM lunch WHERE date = '2014/05/23'";
+$askedDate = '';
+if(!isset($_GET['date'])){
+  $askedDate = date("Y/m/d");
+}else{
+  $dateArr = explode('/', $_GET['date']);
+  $askedDate = abs($dateArr[0]).'/'.abs($dateArr[1]).'/'.abs($dateArr[2]);
+}
+
+$query = "SELECT * FROM lunch WHERE date = '$askedDate'";
+//$query = "SELECT * FROM lunch WHERE date = '2014/05/23'";
 $result = mysql_fetch_assoc(qMysql($query));
 echo json_encode($result, JSON_PRETTY_PRINT);
 
