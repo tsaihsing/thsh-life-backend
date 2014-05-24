@@ -17,12 +17,13 @@ function qMysql($str){
 header('Content-Type: application/json; charset=utf-8');
 header("Access-Control-Allow-Origin: *");
 
-$askedDate = '';
-if(!isset($_GET['date'])){
-  $askedDate = date("Y/m/d");
-}else{
+$askedDate = date("Y/m/d");
+
+if(isset($_GET['date'])||$_GET['date']===''){
   $dateArr = explode('/', $_GET['date']);
-  $askedDate = abs($dateArr[0]).'/'.abs($dateArr[1]).'/'.abs($dateArr[2]);
+  if(sizeof($dateArr) == 3){
+    $askedDate = abs($dateArr[0]).'/'.abs($dateArr[1]).'/'.abs($dateArr[2]);
+  }
 }
 
 $query = "SELECT * FROM lunch WHERE date = '$askedDate'";
