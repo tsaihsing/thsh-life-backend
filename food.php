@@ -26,20 +26,26 @@ if(isset($_GET['date'])&&$_GET['date']!=''){
   }
 }
 
-$type = 'lunch';
+$type = 0;
 
 if(isset($_GET['type'])){
 	switch(strval($_GET['type'])){
 		case 'breakfast':
+			$type = 0;
+			break;
 		case 'lunch':
+			$type = 1;
+			break;
 		case 'dinner':
+			$type = 2;
+			break;
 		case 'snack':
-			$type = strval($_GET['type']);
+			$type = 3;
 			break;
 	}
 }
 
-$query = "SELECT * FROM $type WHERE date = '$askedDate'";
+$query = "SELECT * FROM lunch WHERE date = '$askedDate' AND type = $type";
 //$query = "SELECT * FROM lunch WHERE date = '2014/05/23'";
 $result = mysql_fetch_assoc(qMysql($query));
 echo json_encode($result, JSON_PRETTY_PRINT);
