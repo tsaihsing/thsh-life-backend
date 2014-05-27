@@ -19,14 +19,27 @@ header("Access-Control-Allow-Origin: *");
 
 $askedDate = date("Y/m/d");
 
-if(isset($_GET['date'])||$_GET['date']===''){
+if(isset($_GET['date'])&&$_GET['date']!=''){
   $dateArr = explode('/', $_GET['date']);
   if(sizeof($dateArr) == 3){
     $askedDate = abs($dateArr[0]).'/'.abs($dateArr[1]).'/'.abs($dateArr[2]);
   }
 }
 
-$query = "SELECT * FROM lunch WHERE date = '$askedDate'";
+$type = 'lunch';
+
+if(isset($_GET['type'])){
+	switch(strval($_GET['type'])){
+		case 'breakfast':
+		case 'lunch':
+		case 'dinner':
+		case 'snack':
+			$type = strval($_GET['type']);
+			break;
+	}
+}
+
+$query = "SELECT * FROM $type WHERE date = '$askedDate'";
 //$query = "SELECT * FROM lunch WHERE date = '2014/05/23'";
 $result = mysql_fetch_assoc(qMysql($query));
 echo json_encode($result, JSON_PRETTY_PRINT);
