@@ -20,7 +20,8 @@ header("Access-Control-Allow-Origin: *");
 $askedDate = date("Y/m/d");
 
 if(isset($_GET['date'])&&$_GET['date']!=''){
-  $dateArr = explode('/', $_GET['date']);
+  $dateArr = explode(' ', $_GET['date']);
+  $dateArr = explode('/', $dateArr[0]);
   if(sizeof($dateArr) == 3){
     $askedDate = abs($dateArr[0]).'/'.abs($dateArr[1]).'/'.abs($dateArr[2]);
   }
