@@ -1,17 +1,6 @@
 <?php
-function qMysql($str){
-   $link = mysql_connect("192.168.50.201", "apps", "apps");
-   if (!$link) {
-		die('Could not connect: ' . mysql_error());
-   }
-   mysql_select_db("apps_lunch", $link) or die(mysql_error());
-   mysql_query("SET NAMES 'utf8'"); 
-   mysql_query("SET CHARACTER_SET_CLIENT=utf8"); 
-   mysql_query("SET CHARACTER_SET_RESULTS=utf8"); 
-   $result = mysql_query($str, $link) or die(mysql_error());
-   mysql_close($link);
-   return $result;
-}
+
+require('db.inc.php');
 
 $mealLinks = array('http://210.71.64.9/school_lunch/lunch01.asp?id=%7B10719F54-A185-4776-8B54-36241B455285%7D','http://210.71.64.9/school_lunch/lunch01.asp?id=%7b747CE11F-D618-4AB2-A76C-57795010975D%7d','http://210.71.64.9/school_lunch/lunch01.asp?id=%7BF66638B7-90C2-448D-98E4-42D4EB10DC4D%7D','http://210.71.64.9/school_lunch/lunch01.asp?id=%7BD72654DF-6FC1-43DF-BC44-05E5B8CAD481%7D');
 

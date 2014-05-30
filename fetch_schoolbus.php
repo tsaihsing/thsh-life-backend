@@ -1,17 +1,6 @@
 <?php
-function qMysql($str){
-   $link = mysql_connect("192.168.50.201", "apps", "apps");
-   if (!$link) {
-    die('Could not connect: ' . mysql_error());
-   }
-   mysql_select_db("apps_lunch", $link) or die(mysql_error());
-   mysql_query("SET NAMES 'utf8'");
-   mysql_query("SET CHARACTER_SET_CLIENT=utf8");
-   mysql_query("SET CHARACTER_SET_RESULTS=utf8");
-   $result = mysql_query($str, $link) or die(mysql_error());
-   mysql_close($link);
-   return $result;
-}
+
+require('db.inc.php');
 
 if($_SERVER['REMOTE_ADDR'] != '192.168.50.85'){
   // restrict to local access only
