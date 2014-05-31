@@ -4,7 +4,7 @@ $testMode = true;
 
 require('db.inc.php');
 
-function listActiveBus(){
+function listActiveBus($testMode){
 	// list active cars today
 	$query = 'SELECT `driver` FROM `schoolbus` WHERE `utime` >= CURDATE() GROUP BY `driver`';
 
@@ -24,7 +24,7 @@ header('Content-Type: application/json; charset=utf-8');
 header("Access-Control-Allow-Origin: *");
 
 if(isset($_GET['list'])){
-	echo json_encode(listActiveBus(), JSON_PRETTY_PRINT);
+	echo json_encode(listActiveBus($testMode), JSON_PRETTY_PRINT);
 	exit();
 }
 
@@ -33,7 +33,7 @@ if(isset($_GET['bus'])){
 		include('schoolbus_proto.php');
 		exit();
 	}
-	$activeBuses = listActiveBus();
+	$activeBuses = listActiveBus($testMode);
 	$bus = strval($_GET['bus']);
 	// check if asked bus is active today
 	if(in_array($bus, $activeBuses, true)){
