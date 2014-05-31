@@ -980,5 +980,5 @@ if($_GET['bus']==='幼2.葉玉蘭'){
 	$busSelect = 1;
 }
 
-echo json_encode($schoolbus[$busSelect][sizeof($schoolbus) - round((time()/30))%(sizeof($schoolbus)) -1]);
+echo json_encode($schoolbus[$busSelect][sizeof($schoolbus[$busSelect]) - round((time()/30))%(sizeof($schoolbus[$busSelect])) -1]);
 ?>
