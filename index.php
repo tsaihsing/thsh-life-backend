@@ -7,7 +7,7 @@ require 'vendor/autoload.php';
 $app = new \Slim\Slim();
 
 $app->response->headers->set("Content-Type", "application/json; charset=utf-8");
-$app->response->headers->set("Access-Control-Allow-Origin", "*";)
+$app->response->headers->set("Access-Control-Allow-Origin", "*");
 
 // Set up database connection
 
