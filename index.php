@@ -144,6 +144,41 @@ $app->get('/fetch/meal', function(){
   }
 });
 
+$app->get('/fetch/schoolbus', function(){
+  if(isset($_POST['status'])&&isset($_POST['position'])&&isset($_POST['direction'])){
+    $status = json_decode($_POST['status']);
+    $position = json_decode($_POST['position']);
+
+    // split into plate and driver
+    $status[0] = explode(',', $status[0]);
+    // remove km/h text
+    $status[1] = abs(explode(',', $status[1])[0]);
+    // filter direction
+    $direction = preg_replace("/[^a-zA-z0-9]/", "", $_POST['direction']);
+    $state = 0;
+    if($direction[0]=='D'){
+    // if car is green, means it's running
+    $state = 1;
+    }
+    print_r($status);
+    print_r($position);
+
+    $query = "INSERT INTO `schoolbus`(`plate`,`driver`,`speed`,`utime`,`lat`,`long`,`state`,`direction`) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+
+    R::exec($query, array(
+      $status[0][0],
+      $status[0][1],
+      $status[1],
+      $status[2],
+      $position[0],
+      $position[1],
+      $state,
+      $direction[1]
+    ));
+
+  }
+});
+
 $app->get("/:legacy", function($legacy) use($app) {
 
   // This is only to keep CRON jobs work
