@@ -275,8 +275,6 @@ $app->get('/contact_book', function(){
     if(strpos($_GET['date'], " ") != false){
       $date_split = explode(" ", $_GET['date']);
       $askedDate = $date_split[0];
-    }else{
-      $askedDate = $_GET['date'];
     }
   }
 
