@@ -118,6 +118,8 @@ $app->get('/fetch/meal', function(){
 
 $app->get("/:legacy", function($legacy) use($app) {
 
+  // This is only to keep CRON jobs work
+
   $legacy_map = array(
     "fetch_lunch.php" => 'fetch/meal'
   );
