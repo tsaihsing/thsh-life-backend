@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require 'db.config.php';
+require 'config.php';
 require 'vendor/autoload.php';
 
 $app = new \Slim\Slim();
@@ -55,7 +55,7 @@ $app->get('/schoolbus', function(){
 
     $query = 'SELECT `driver` FROM `schoolbus` WHERE `utime` >= CURDATE() GROUP BY `driver`';
 
-    if($testMode){
+    if(TEST_MODE){
       $query = 'SELECT `driver` FROM `schoolbus` WHERE 1 GROUP BY `driver`';
     }
 
@@ -66,7 +66,7 @@ $app->get('/schoolbus', function(){
   }else{
 
     if(isset($_GET['bus'])){
-      if($testMode == true){
+      if(TEST_MODE){
         include('schoolbus_proto.php');
       }else{
         $query = 'SELECT `driver` as bus, `lat`, `long`, `state`, `speed`, `utime`, `direction` FROM `schoolbus` WHERE `driver` = ? ORDER BY `utime` DESC LIMIT 0,1';
