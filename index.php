@@ -13,6 +13,43 @@ $app->response->headers->set("Access-Control-Allow-Origin", "*");
 
 R::setup('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
 
+$app->get('/meal', function(){
+
+  $askedDate = date("Y/m/d");
+
+  if(isset($_GET['date'])&&$_GET['date']!=''){
+    if(strpos($_GET['date'], " ") != false){
+      $date_split = explode(" ", $_GET['date']);
+      $askedDate = $date_split[0];
+    }else{
+      $askedDate = $_GET['date'];
+    }
+  }
+
+  $type = 0;
+
+  if(isset($_GET['type'])){
+    switch(strval($_GET['type'])){
+      case 'breakfast':
+        $type = 0;
+        break;
+      case 'lunch':
+        $type = 1;
+        break;
+      case 'dinner':
+        $type = 2;
+        break;
+      case 'snack':
+        $type = 3;
+        break;
+    }
+  }
+
+  $result = R::getRow("SELECT * FROM lunch WHERE date = ? AND type = ?", [$askedDate, $type]);
+  echo json_encode($result);
+});
+
+
 $app->get('/fetch/meal', function(){
   $mealLinks = array('http://210.71.64.9/school_lunch/lunch01.asp?id=%7B10719F54-A185-4776-8B54-36241B455285%7D','http://210.71.64.9/school_lunch/lunch01.asp?id=%7b747CE11F-D618-4AB2-A76C-57795010975D%7d','http://210.71.64.9/school_lunch/lunch01.asp?id=%7BF66638B7-90C2-448D-98E4-42D4EB10DC4D%7D','http://210.71.64.9/school_lunch/lunch01.asp?id=%7BD72654DF-6FC1-43DF-BC44-05E5B8CAD481%7D');
 
