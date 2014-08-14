@@ -269,7 +269,18 @@ $app->get('/contact_book', function(){
 
   define("CBURI", "http://210.71.64.9/CustomerSet/018_ContactBooks/u_Detail.asp?id={19D75159-18A8-4612-ABAD-26400DA80A29}");
 
-  $toParse = file_get_contents(CBURI . '&cid=30&sdate=2014/8/14');
+  $askedDate = date("Y/m/d");
+
+  if(isset($_GET['date'])&&$_GET['date']!=''){
+    if(strpos($_GET['date'], " ") != false){
+      $date_split = explode(" ", $_GET['date']);
+      $askedDate = $date_split[0];
+    }else{
+      $askedDate = $_GET['date'];
+    }
+  }
+
+  $toParse = file_get_contents(CBURI.'&cid='.$_GET['cid'].'&sdate='.$askedDate);
   $toParse = str_replace("\r\n", "", $toParse);
   $toParse = explode('<form name="form1" method="post" action="u_list_v.asp?id={19D75159-18A8-4612-ABAD-26400DA80A29}&pageno=&mode=">', $toParse);
   $toParse = explode('</table>', $toParse[1]);
