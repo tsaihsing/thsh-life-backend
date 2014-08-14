@@ -6,6 +6,9 @@ require 'vendor/autoload.php';
 
 $app = new \Slim\Slim();
 
+$app->response->headers->set("Content-Type", "application/json; charset=utf-8");
+$app->response->headers->set("Access-Control-Allow-Origin", "*";)
+
 // Set up database connection
 
 R::setup('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
@@ -40,14 +43,12 @@ $app->get('/fetch/meal', function(){
       }
     }
 
-    //print_r(
-    print_r($dateData);
     for($i=0; $i<7; $i++){
     $toParse[$i]=str_replace("</td>","",$toParse[$i]);
     $toParse[$i]=explode("<td align=\"center\" class=\"C-tableA2\">",$toParse[$i]);
     }
 
-    print_r($toParse);
+    echo json_encode(array($dateData,$toParse));
 
     $lunchData=array(6);
 
