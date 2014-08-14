@@ -49,6 +49,34 @@ $app->get('/meal', function(){
   echo json_encode($result);
 });
 
+$app->get('/schoolbus', function(){
+
+  if(isset($_GET['list'])){
+
+    $query = 'SELECT `driver` FROM `schoolbus` WHERE `utime` >= CURDATE() GROUP BY `driver`';
+
+    if($testMode){
+      $query = 'SELECT `driver` FROM `schoolbus` WHERE 1 GROUP BY `driver`';
+    }
+
+    $result = R::getAll($query);
+
+    echo json_encode($result, JSON_PRETTY_PRINT);
+
+  }else{
+
+    if(isset($_GET['bus'])){
+      if($testMode == true){
+        include('schoolbus_proto.php');
+      }else{
+        $query = 'SELECT `driver` as bus, `lat`, `long`, `state`, `speed`, `utime`, `direction` FROM `schoolbus` WHERE `driver` = ? ORDER BY `utime` DESC LIMIT 0,1';
+        $result = R::getRow($query, [ $_GET['bus'] ]);
+        echo json_encode($result, JSON_PRETTY_PRINT);
+      }
+    }
+
+  }
+});
 
 $app->get('/fetch/meal', function(){
   $mealLinks = array('http://210.71.64.9/school_lunch/lunch01.asp?id=%7B10719F54-A185-4776-8B54-36241B455285%7D','http://210.71.64.9/school_lunch/lunch01.asp?id=%7b747CE11F-D618-4AB2-A76C-57795010975D%7d','http://210.71.64.9/school_lunch/lunch01.asp?id=%7BF66638B7-90C2-448D-98E4-42D4EB10DC4D%7D','http://210.71.64.9/school_lunch/lunch01.asp?id=%7BD72654DF-6FC1-43DF-BC44-05E5B8CAD481%7D');
