@@ -265,6 +265,21 @@ $app->get('/contact_book/list', function(){
 
 });
 
+$app->get('/contact_book', function(){
+
+  define("CBURI", "http://210.71.64.9/CustomerSet/018_ContactBooks/u_Detail.asp?id={19D75159-18A8-4612-ABAD-26400DA80A29}");
+
+  $toParse = file_get_contents(CBURI . '&cid=30&sdate=2014/8/14');
+  $toParse = str_replace("\r\n", "", $toParse);
+  $toParse = explode('<form name="form1" method="post" action="u_list_v.asp?id={19D75159-18A8-4612-ABAD-26400DA80A29}&pageno=&mode=">', $toParse);
+  $toParse = explode('</table>', $toParse[1]);
+
+//  $toParse = explode('<td align="center"', $toParse[0]);
+
+  echo($toParse[0]);
+
+});
+
 $app->get("/:legacy", function($legacy) use($app) {
 
   // This is only to keep CRON jobs work
