@@ -229,6 +229,42 @@ $app->get('/weather', function(){
 
 });
 
+$app->get('/contact_book/list', function(){
+
+  define("CLASSLISTURI", "http://210.71.64.9/CustomerSet/018_ContactBooks/u_list_v.asp?id={19D75159-18A8-4612-ABAD-26400DA80A29}");
+
+  $toParse = file_get_contents(CLASSLISTURI);
+  $toParse = explode('<select id="delClassSearch" name="delClassSearch"><option value="0"  selected>請選擇班級</option><option value="', $toParse);
+  $toParse = explode('</option></select>', $toParse[1]);
+  $toParse = explode('</option><option value="', $toParse[0]);
+
+  $class_all = array();
+
+  foreach($toParse as $class){
+
+    $class_data = explode('">', $class);
+    $grade = mb_substr($class_data[1], 0, 2, "utf-8");
+
+    if(!isset($class_all[$grade])){
+      $class_all[$grade] = array();
+    }
+
+    $class_all[$grade][] = array($class_data[0], mb_substr($class_data[1], 2, 4, "utf-8"));
+
+  }
+
+  $class_final = array();
+
+  foreach($class_all as $key => $value){
+
+    $class_final[] = array($key, $value);
+
+  }
+
+  echo json_encode($class_final);
+
+});
+
 $app->get("/:legacy", function($legacy) use($app) {
 
   // This is only to keep CRON jobs work
