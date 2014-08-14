@@ -4,8 +4,19 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3572ef5486e01be41b96a1fdace500a6",
+    "hash": "84fcb7e19d2e679ad30292dba39d43fd",
     "packages": [
+        {
+            "name": "redbeanphp",
+            "version": "4.0.4",
+            "dist": {
+                "type": "tar",
+                "url": "http://www.redbeanphp.com/downloadredbean.php",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
         {
             "name": "slim/slim",
             "version": "2.4.3",
@@ -59,7 +70,7 @@
     "aliases": [
 
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [
 
     ],
