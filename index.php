@@ -144,7 +144,12 @@ $app->get('/fetch/meal', function(){
   }
 });
 
-$app->get('/fetch/schoolbus', function(){
+$app->get('/fetch/schoolbus', function() use($app) {
+
+  if($_SERVER['REMOTE_ADDR'] != '127.0.0.1'){
+    $app->halt(403, "Forbidden");
+  }
+
   if(isset($_POST['status'])&&isset($_POST['position'])&&isset($_POST['direction'])){
     $status = json_decode($_POST['status']);
     $position = json_decode($_POST['position']);
