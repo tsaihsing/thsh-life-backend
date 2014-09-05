@@ -137,7 +137,7 @@ $app->get('/fetch/meal', function(){
         }
         $values[] = $type;
 
-        R::exec("INSERT INTO `lunch`(`date`,`day`,`week`,`base`,`main`,`secd`,`soup`,`fruit`,`calories`,`type`) VALUES(?, ?, WEEK(?, '1'), ?, ?, ?, ?, ?, ?)", $values);
+        R::exec("INSERT INTO `lunch`(`date`,`day`,`week`,`base`,`main`,`secd`,`soup`,`fruit`,`calories`,`type`) VALUES(?, ?, WEEK(?, '1'), ?, ?, ?, ?, ?, ?, ?)", $values);
       }
     }
 
