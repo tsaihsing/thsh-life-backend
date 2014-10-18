@@ -144,9 +144,9 @@ $app->get('/fetch/meal', function(){
   }
 });
 
-$app->get('/fetch/schoolbus', function() use($app) {
+$app->post('/fetch/schoolbus', function() use($app) {
 
-  if($_SERVER['REMOTE_ADDR'] != '127.0.0.1'){
+  if($_SERVER['REMOTE_ADDR'] != FETCHER_IP){
     $app->halt(403, "Forbidden");
   }
 

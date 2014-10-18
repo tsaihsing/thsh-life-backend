@@ -7,4 +7,6 @@ define("DB_NAME", "");
 
 define("TEST_MODE", true);
 
+define("FETCHER_IP", "");
+
 ?>
