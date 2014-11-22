@@ -303,6 +303,31 @@ $app->get('/calendar', function(){
   echo json_encode(array("data" => $toParse));
 });
 
+$app->get('/news', function(){
+
+  define("NEWSURL", "http://www.thsh.tp.edu.tw/news_under/u_news_v.asp?id={02E6CF60-BCF3-489C-923D-0A0A155CE672}");
+
+  $toParse = file_get_contents(NEWSURL);
+  $toParse = explode('<CAPTION class="C-tableA-captton">下級訊息發布列表</CAPTION>', $toParse);
+  unset($toParse[0]);
+  foreach($toParse as $key => $value){
+    $toParse[$key] = explode('</tr>', $value);
+  }
+  $data = array();
+  for($i = 1; $i <= 10; $i++){
+    $toParse[1][$i] = str_replace("</a></td>", "", $toParse[1][$i]);
+    $toParse[1][$i] = str_replace("</td>", "", $toParse[1][$i]);
+    $toParse[1][$i] = str_replace("\r", "", $toParse[1][$i]);
+    $toParse[1][$i] = str_replace("\n", "", $toParse[1][$i]);
+    $toParse[1][$i] = explode('<td align="left">', $toParse[1][$i]);
+    $toParse[1][$i][1] = explode('"', $toParse[1][$i][1]);
+    $toParse[1][$i][0] = $toParse[1][$i][1][1];
+    $toParse[1][$i][1] = substr($toParse[1][$i][1][6], 1);
+    $data[] = $toParse[1][$i];
+  }
+  echo json_encode(array("data" => $data));
+});
+
 $app->get("/:legacy", function($legacy) use($app) {
 
   // This is only to keep CRON jobs work
