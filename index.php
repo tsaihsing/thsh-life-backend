@@ -289,6 +289,20 @@ $app->get('/contact_book', function(){
 
 });
 
+$app->get('/calendar', function(){
+
+  define("CALENDAR_URL", "http://www.thsh.tp.edu.tw/calendar/pagecalendar.asp?id={B8CD5507-86D8-4661-8D92-40AB2D5C6584}&mode=view&seqno=1");
+
+  $toParse = file_get_contents(CALENDAR_URL);
+  $toParse = str_replace("\n", "", $toParse);
+  $toParse = str_replace("\r", "", $toParse);
+  $toParse = explode('→</a></td>   </tr> </table></td></tr>', $toParse);
+  $toParse = explode('</form><tr class="C-tableA1"> <td align="center"', $toParse[1])[0];
+  $toParse = strip_tags($toParse, "<tr><th><td>");
+  $toParse = str_replace('▲', "", $toParse);
+  echo json_encode(array("data" => $toParse));
+});
+
 $app->get("/:legacy", function($legacy) use($app) {
 
   // This is only to keep CRON jobs work
