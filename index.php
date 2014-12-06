@@ -352,7 +352,7 @@ $app->get('/news/u_news_v3.asp', function() use($app) {
   $toParse = str_replace('(點選連結時，會以開新視窗方式呈現)', '', $toParse);
   $toParse = str_replace('<th', '<!-- <th', $toParse);
   $toParse = str_replace('</th>', '</th> --><br />', $toParse);
-  $toParse = strip_tags($toParse, "<img><font><a><br>");
+  $toParse = strip_tags($toParse, "<img><font><a><br><iframe>");
   echo json_encode(array("data" => $toParse));
 });
 
