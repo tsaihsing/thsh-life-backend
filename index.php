@@ -343,7 +343,7 @@ $app->get('/news/u_news_v3.asp', function() use($app) {
   if(sizeof($toParse) == 1){
     $app->halt(404);
   }
-  $toParse = explode('</table>', $toParse)[1];
+  $toParse = explode('</table>', $toParse[1])[0];
   // fix youtube problem, since cordova app is running at file://
   $toParse = str_replace('src="//', 'src="https://', $toParse);
   print_r($toParse);
