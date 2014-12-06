@@ -349,6 +349,10 @@ $app->get('/news/u_news_v3.asp', function() use($app) {
   $toParse = explode('</table>', $toParse[1])[0];
   // fix youtube problem, since cordova app is running at file://
   $toParse = str_replace('src="//', 'src="https://', $toParse);
+  $toParse = str_replace('(點選連結時，會以開新視窗方式呈現)', '', $toParse);
+  $toParse = str_replace('<th', '<!-- <th', $toParse);
+  $toParse = str_replace('</th>', '</th> --><br />', $toParse);
+  $toParse = strip_tags($toParse, "<img><font><a><br>");
   echo json_encode(array("data" => $toParse));
 });
 
