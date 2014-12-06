@@ -328,19 +328,22 @@ $app->get('/news', function(){
   echo json_encode(array("data" => $data));
 });
 
-$app->get('/news/u_news_v3.asp', function(){
+$app->get('/news/u_news_v3.asp', function() use($app) {
 
   $required_parameters = array('id', 'newsid');
   foreach($required_parameters as $para){
     if(!isset($_GET[$para])){
-      $app->halt();
+      $app->halt(400);
     }
   }
 
   define("NEWSDETAILURL", "http://www.thsh.tp.edu.tw/news/u_news_v3.asp?id=".$_GET['id']."&newsid=".$_GET['newsid']);
   $toParse = file_get_contents(NEWSDETAILURL);
-  $toParse = explode('<CAPTION class="C-tableA-captton">最新消息列表</CAPTION>', $toParse)[1];
-  $toParse = explode('</table>', $toParse)[0];
+  $toParse = explode('<CAPTION class="C-tableA-captton">最新消息列表</CAPTION>', $toParse);
+  if(sizeof($toParse) == 1){
+    $app->halt(404);
+  }
+  $toParse = explode('</table>', $toParse)[1];
   // fix youtube problem, since cordova app is running at file://
   $toParse = str_replace('src="//', 'src="https://', $toParse);
   print_r($toParse);
