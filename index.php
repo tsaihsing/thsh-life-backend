@@ -342,7 +342,7 @@ $app->get('/news/u_news_v3.asp', function() use($app) {
 
   define("NEWSDETAILURL", "http://www.thsh.tp.edu.tw/news/u_news_v3.asp?id=".$_GET['id']."&newsid=".$_GET['newsid']);
   $toParse = file_get_contents(NEWSDETAILURL);
-  $toParse = explode('<CAPTION class="C-tableA-captton">最新消息列表</CAPTION>', $toParse);
+  $toParse = explode('列表</CAPTION>', $toParse);
   if(sizeof($toParse) == 1){
     $app->halt(404);
   }
