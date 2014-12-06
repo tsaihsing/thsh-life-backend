@@ -349,7 +349,7 @@ $app->get('/news/u_news_v3.asp', function() use($app) {
   $toParse = explode('</table>', $toParse[1])[0];
   // fix youtube problem, since cordova app is running at file://
   $toParse = str_replace('src="//', 'src="https://', $toParse);
-  print_r($toParse);
+  echo json_encode(array("data" => $toParse));
 });
 
 $app->get("/:legacy", function($legacy) use($app) {
