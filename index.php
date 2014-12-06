@@ -325,7 +325,7 @@ $app->get('/news', function(){
     $toParse[1][$i][1] = substr($toParse[1][$i][1][6], 1);
     $data[] = $toParse[1][$i];
   }
-  echo json_encode(array("data" => $data));
+  echo json_encode($data);
 });
 
 $app->get('/news/u_news_v3.asp', function() use($app) {
