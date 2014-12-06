@@ -323,6 +323,9 @@ $app->get('/news', function(){
     $toParse[1][$i][1] = explode('"', $toParse[1][$i][1]);
     $toParse[1][$i][0] = $toParse[1][$i][1][1];
     $toParse[1][$i][1] = substr($toParse[1][$i][1][6], 1);
+    if(strpos("<font", $toParse[1][$i][1]) != -1){
+      $toParse[1][$i][1] .= "</font>";
+    }
     $data[] = $toParse[1][$i];
   }
   echo json_encode($data);
